@@ -1,0 +1,5 @@
+N = int(input())
+M = int(input())
+A = int(input())
+B = int(input())
+print((N * M) - ((A * M) + (B * N) - (A * B)))
