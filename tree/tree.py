@@ -1,3 +1,5 @@
+import random as rnd
+
 class Node:
     def __init__(self, value=None):
         self.left = None
@@ -9,7 +11,26 @@ class Tree:
         self.root = Node()
 
     def insert(self, key):
-        pass
+        if self.root.value == None:
+            self.root.value = key
+            return
+
+        cur = self.root
+        last = self.root
+        direction = None
+        while cur != None:
+            last = cur
+            if key >= cur.value:
+                cur = cur.right
+                direction = True
+            else:
+                cur = cur.left
+                direction = False
+        
+        if direction:
+            last.right = Node(key)
+        else:
+            last.left = Node(key)
     
     def delete(self, key):
         pass
@@ -17,31 +38,33 @@ class Tree:
     def search(self, key):
         current = self.root
         path = "root"
-        while current.value != key:
+        while current != None:
             if current.value == None:
-                break
+                return None
             if key > current.value:
                 current = current.right
                 path += "1"
-            else:
+            elif key < current.value:
                 current = current.left
                 path += "0"
-        
-        return path
+            else:
+                return path
+        else:
+            return None
 
-# t = Tree()
-# t.root.value = 4
-# t.root.left = Node()
-# t.root.left.value = 2
-# t.root.left.left = Node()
-# t.root.left.left.value = 1
-# t.root.left.right = Node()
-# t.root.left.right.value = 3
-# t.root.right = Node()
-# t.root.right.value = 10
-# t.root.right.left = Node()
-# t.root.right.left.value = 6
-# t.root.right.right = Node()
-# t.root.right.right.value = 123
+t = Tree()
+a = set()
+for i in range(10):
+    a.add(rnd.randint(0,10))
 
-print(t.search(123))
+a = list(a)
+rnd.shuffle(a)
+
+for el in a:
+    t.insert(el)
+
+print(a)
+x = input("search: ")
+while x != "-1":
+    print(t.search(int(x)))
+    x = input("search: ")
